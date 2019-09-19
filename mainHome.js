@@ -372,7 +372,7 @@
 				app_code,
 				"&jsoncallback=parseRoutingResponse"].join("");
 
-				feedbackTxt.innerHTML = strRoutingRequestSend;
+				feedbackTxt.innerHTML += strRoutingRequestSend;
 				script = document.createElement("script");
 				script.src = urlRoutingReq;
 				document.body.appendChild(script);
@@ -460,11 +460,13 @@
 			map.getViewModel().setLookAtData({bounds: group.getBoundingBox()},true);
 			
 			 
-			// show TCE costs
-			showTceCost(resp.response.route[0].tollCost.costsByCountryAndTollSystem, resp.response.route[0].cost,resp.response.route[0].summary, resp.warnings);
+
+
 
 			for(var i = 0; i < resp.response.route.length; i++) {
 				highlightRoute(resp.response.route[i].tollCost.routeTollItems, i);
+				showTceCost(resp.response.route[i].tollCost.costsByCountryAndTollSystem, resp.response.route[i].cost,resp.response.route[i].summary, resp.warnings);
+				//feedbackTxt.innerHTML += JSON.stringify(resp.response.route[i].summary);
 			}
 		}
 		function sleep(ms) {
@@ -473,7 +475,7 @@
 			function showTceCost(costByCountryAndTollSystem, costs, summary,warnings) {
 			
 			
-			feedbackTxt.innerHTML = "<br/><span style=\"font-weight: bold;padding: 2px;\">Total Cost</span><hr>";
+			feedbackTxt.innerHTML += "<br/><span style=\"font-weight: bold;padding: 2px;\">Total Cost</span><hr>";
 			if(warnings)
 			{
 				for(var j = 0; j < warnings.length; j++)
