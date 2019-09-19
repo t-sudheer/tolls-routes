@@ -102,13 +102,7 @@
 		var tollIcon = new H.map.Icon(tollImg, {anchor: new H.math.Point(10,35)});
 		map.addObject(markerGroup);
         
-		/************************************
-
-		Geocoding and routing methods
-
-		************************************/
-
-		/***/
+		
 		function clearLastRouteCalculation() {
 			bErrorHappened = false;
 			bLongClickUseForStartPoint = true;
@@ -119,18 +113,13 @@
 
 		}
 
-		/************************************
-		Start Route Calculation
-		************************************/
 		var startRouteCalculation = function () {
 			clearLastRouteCalculation();
 			geocode(start.value, true);
 		}
 		routeButton.onclick = startRouteCalculation;
 
-		/********************************************************
-		Start/Destination selectin via LongClick in map
-		********************************************************/
+	
 		function handleLongClickInMap(currentEvent) {
 			var lastClickedPos = map.screenToGeo(currentEvent.currentPointer.viewportX, currentEvent.currentPointer.viewportY);
 
@@ -169,9 +158,7 @@
 		map.getViewModel().setLookAtData({bounds: markerGroup.getBoundingBox(),zoom:5},true);
 		}
 
-		/************************************
-		Geocode start/destination
-		************************************/
+
 		var geocode = function (searchTerm, start) {
 			//add Geocoder Release information if not already done
 			
@@ -243,9 +230,7 @@
 			);
 		}
 
-		/************************************
-		Actual Route Calculation
-		************************************/
+
 		var calculateRoute = function (start, destination) {
 
 			// generate routing request
@@ -375,8 +360,7 @@
 				isDTFilteringEnabled? document.getElementById("startRouteDate").value + 'T' + document.getElementById("startRouteTime").value : '',
 				vspec,
 				"&mode=fastest;" + transportMode + ";traffic:disabled",
-				//((width != null && width.length > 0) ? width : ""), //this parameter has already been added in the vspec so no need to add it again
-				//((length != null && length.length > 0) ? length : ""), //this parameter has already been added in the vspec so no need to add it again
+				
 				((shippedHazardousGoods != null && shippedHazardousGoods.length > 0) ? shippedHazardousGoods : ""),
 				"&"+rollupPrm+"=none,country;tollsys",
 				(routeAlternativesRequested ? "&alternatives=" + document.getElementById("routeAlternatives").value  : ''),
@@ -394,9 +378,7 @@
 				document.body.appendChild(script);
 		}
 
-		/************************************
-		parse the routing response
-		************************************/
+		
 		function parseRoutingResponse(resp) {
 			if (resp.errors != undefined && resp.errors.length != 0) {
 				if (resp.errors[resp.errors.length-1] == "NoRouteFound") {
@@ -481,9 +463,6 @@
 			// show TCE costs
 			showTceCost(resp.response.route[0].tollCost.costsByCountryAndTollSystem, resp.response.route[0].cost,resp.response.route[0].summary, resp.warnings);
 
-			/***********************************************
-			Highlight Links
-			***********************************************/
 			for(var i = 0; i < resp.response.route.length; i++) {
 				highlightRoute(resp.response.route[i].tollCost.routeTollItems, i);
 			}
@@ -491,17 +470,9 @@
 		function sleep(ms) {
 			return new Promise(resolve => setTimeout(resolve, ms));
 		  }
-		/**************************************************
-		show route toll cost response
-		**************************************************/
-		function showTceCost(costByCountryAndTollSystem, costs, summary,warnings) {
+			function showTceCost(costByCountryAndTollSystem, costs, summary,warnings) {
 			
-			/***********************************************
-
-			Publishing route total cost
-
-			***********************************************/
-
+			
 			feedbackTxt.innerHTML = "<br/><span style=\"font-weight: bold;padding: 2px;\">Total Cost</span><hr>";
 			if(warnings)
 			{
@@ -537,7 +508,7 @@
 				var feedback = "";
 				feedback += "<br/>";
 				for (var j = 0; j < costByCountryAndTollSystem.length; j++) {
-					feedback += "<br/><span style=\"font-weight: bold;border: 1px solid;padding: 2px;\">" + costByCountryAndTollSystem[j].country + "</span>"
+					feedback += "<br/><span style=\"font-weight: bold;padding: 2px;\">" + costByCountryAndTollSystem[j].country + "</span>"
 					feedback += "<ul><li>";
 					if(costByCountryAndTollSystem[j].name != null && costByCountryAndTollSystem[j].name.trim().length > 0) {
 						feedback += "Toll System " + costByCountryAndTollSystem[j].name + ": ";
@@ -979,25 +950,15 @@
 		selectionSettingHelper(document.getElementById("fuelType"), fuelType);
 	}
 
-	/**
-	 This method sets the user defined vehicle spec option in the element predefinedVehSpec if
-	 the passed parameter is true
-	 */
 	function setUserdefinedVehicleSpec(bSetUserdefinedVehicleSpec) {
 		if (bSetUserdefinedVehicleSpec) {
 			// show User defined option
 			var vehSpecSelection = document.getElementById("predefinedVehSpec");
 			selectionSettingHelper(vehSpecSelection, 99);
 		}
-		/*else
-		 {
-		 // do nothing cause User defined option will hide automatically
-		 }*/
+		
 	}
 
-	/**
-	 This method returns a string of the payment methods of the passed condition like '(Creditcard, Bank Card)'
-	 */
 	function extractMethodOfPayment(condition) {
 		var strRet = "(";
 		var methodOfPayment = condition.methodsOfPayment;
@@ -1045,9 +1006,6 @@
 		return strRet;
 	}
 
-	/**
-	This method creates the toll marker at the beginning of the passed link
-	*/
 	function createTollMarker(oneTollStructure)
 	{
 		var pos= new H.geo.Point(oneTollStructure.latitude, oneTollStructure.longitude);
