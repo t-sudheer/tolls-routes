@@ -468,9 +468,15 @@
 			}
 
 			map.addObject(group);
-			map.getViewPort().setPadding(0, 0, 0, $('.ctrl-panel').width());
+
+			(async function(){
+				await sleep(2000);
+				map.setZoom(map.getViewModel().getLookAtData().zoom-1);
+			    
+			console.log('sleep')
+			})();
 			map.getViewModel().setLookAtData({bounds: group.getBoundingBox()},true);
-			console.log(link)
+			
 			 
 			// show TCE costs
 			showTceCost(resp.response.route[0].tollCost.costsByCountryAndTollSystem, resp.response.route[0].cost,resp.response.route[0].summary, resp.warnings);
@@ -482,7 +488,9 @@
 				highlightRoute(resp.response.route[i].tollCost.routeTollItems, i);
 			}
 		}
-
+		function sleep(ms) {
+			return new Promise(resolve => setTimeout(resolve, ms));
+		  }
 		/**************************************************
 		show route toll cost response
 		**************************************************/
