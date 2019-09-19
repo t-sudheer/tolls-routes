@@ -45,16 +45,16 @@
 		group = new H.map.Group(),
 		markerGroup = new H.map.Group(),
 		map =  new H.Map(mapContainer,
-            maptypes.raster.normal.map,{
+            maptypes.vector.normal.map,{
                 center: center,
-                zoom: zoom,
+                zoom: 12,
             pixelRatio: window.devicePixelRatio || 1
           });
        
           window.addEventListener('resize', () => map.getViewPort().resize());
       
 
-		//map.getViewPort().setPadding(0, 0, 0, $('.ctrl-panel').width());
+		map.getViewPort().setPadding(0, 0, 0, $('.ctrl-panel').width());
 
 		// add behavior control
 		new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
