@@ -380,6 +380,7 @@
 
 		
 		function parseRoutingResponse(resp) {
+			feedbackTxt.innerHTML = ''
 			if (resp.errors != undefined && resp.errors.length != 0) {
 				if (resp.errors[resp.errors.length-1] == "NoRouteFound") {
 					alert('Please consider to change your start or destination as the one you entered is not reachable with the given vehicle profile');
