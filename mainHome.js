@@ -35,7 +35,9 @@
 
 		// Create a platform object to communicate with the HERE REST APIs
 		var platform = new H.service.Platform({
-            apikey :api_key,
+			apikey :api_key,
+			useCIT: true,
+    		useHTTPS: secure
 		}),
 		maptypes = platform.createDefaultLayers(),
 		geocoder = platform.getGeocodingService(),
