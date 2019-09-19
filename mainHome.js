@@ -45,7 +45,7 @@
 		group = new H.map.Group(),
 		markerGroup = new H.map.Group(),
 		map =  new H.Map(mapContainer,
-            maptypes.vector.normal.map,{
+            maptypes.raster.normal.map,{
                 center: center,
                 zoom: 12,
             pixelRatio: window.devicePixelRatio || 1
