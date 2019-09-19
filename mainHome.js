@@ -44,14 +44,15 @@
 		router = platform.getRoutingService(),
 		group = new H.map.Group(),
 		markerGroup = new H.map.Group(),
-		map =  new H.Map(mapContainer,
-            maptypes.terrain.map,{
-                center: center,
-                zoom: 12,
-            pixelRatio: window.devicePixelRatio || 1
-          });
-       
-          window.addEventListener('resize', () => map.getViewPort().resize());
+		  map = new H.Map(
+			document.getElementById('mapContainer'),
+			maptypes.vector.normal.map,
+			{
+			  zoom,
+			  center
+			});
+			
+		window.addEventListener('resize', () => map.getViewPort().resize());
       
 
 		map.getViewPort().setPadding(0, 0, 0, $('.ctrl-panel').width());
@@ -62,18 +63,6 @@
 		// add UI
 		var ui = H.ui.UI.createDefault(map, maptypes);
 
-		//add JS API Release information
-		//releaseInfoTxt.innerHTML += "JS API: 3." + H.buildInfo().version;
-
-		//add MRS Release information
-		//loadMRSVersionTxt();
-
-		//helper
-		var releaseGeocoderShown = false;
-		var releaseRoutingShown = false;
-
-		// add window resizing event listener
-        window.addEventListener('resize', () => map.getViewPort().resize());
 		// add long click in map event listener
 		map.addEventListener('longpress', handleLongClickInMap);
 
@@ -102,15 +91,15 @@
 		var ppType_F_Color = ["rgba(214, 127, 255, 0.8)", "rgba(214, 127, 255, 0.7)", "rgba(214, 127, 255, 0.6)"];
 		var ppType_K_Color = ["rgba(178, 0, 255, 0.8)", "rgba(178, 0, 255, 0.7)", "rgba(178, 0, 255, 0.6)"];
 		var ppType_U_Color = ["rgba(0, 204, 0, 0.8)", "rgba(0, 204, 0, 0.7)", "rgba(0, 204, 0, 0.6)"];
-		var tollCostStroke = 8, routeStroke = 8;
+		var tollCostStroke = 5, routeStroke = 5;
 		var strRoutingRequestSend = "Routing request sent. Waiting for response...";
 		var strTceRequestSend = "Route Toll Cost request sent and logged. Waiting for response...";
 		var strTceError = "An Error happened during Route Toll Cost calculation. Please check the vehicle specification<br/>F.e. Trailer number set but no trailer type.";
 		var strTceResponseReceived = "Received TCE response. Processing it now.";
 		// toll image
 		var tollImg = document.createElement("img");
-		tollImg.src = "toll.png";
-		var tollIcon = new H.map.Icon(tollImg, {anchor: new H.math.Point(0, 10)});
+		tollImg.src = "tollimg.gif";
+		var tollIcon = new H.map.Icon(tollImg, {anchor: new H.math.Point(10,35)});
 		map.addObject(markerGroup);
         
 		/************************************
@@ -176,6 +165,8 @@
 					markerGroup.addObject(destMarker);
 					bLongClickUseForStartPoint = true;
 			}
+	
+		map.getViewModel().setLookAtData({bounds: markerGroup.getBoundingBox()});
 		}
 
 		/************************************
@@ -183,10 +174,7 @@
 		************************************/
 		var geocode = function (searchTerm, start) {
 			//add Geocoder Release information if not already done
-			if (releaseGeocoderShown == false) {
-				//loadGeocoderVersionTxt();
-				releaseGeocoderShown = true;
-			}
+			
 			geocoder.search(
 				{
 					searchText: searchTerm
@@ -451,7 +439,7 @@
 							style: {
 								lineWidth: (routeStroke - (r + 1)), // alternatives get smaller line with
 								strokeColor: routeColor[r],
-								lineCap: 'butt'
+								//lineCap: 'butt'
 							}
 						});
 						link.setArrows({color: "#F00F", width: 2, length: 3, frequency: 4});
@@ -479,13 +467,11 @@
 			}
 
             map.addObject(group);
-            map.getViewModel().setLookAtData({
-                bounds: group.getBoundingBox()
-              });
-			//map.setViewBounds(group.getBounds());
-
+			map.getViewModel().setLookAtData({bounds: group.getBoundingBox(),zoom:10},true);
+			console.log('map.getViewModel().setLookAtData({bounds: map.getBoundingBox()});')
+			 
 			// show TCE costs
-			showTceCost(resp.response.route[0].tollCost.costsByCountryAndTollSystem, resp.response.route[0].cost, resp.warnings);
+			showTceCost(resp.response.route[0].tollCost.costsByCountryAndTollSystem, resp.response.route[0].cost,resp.response.route[0].summary, resp.warnings);
 
 			/***********************************************
 			Highlight Links
@@ -498,7 +484,7 @@
 		/**************************************************
 		show route toll cost response
 		**************************************************/
-		function showTceCost(costByCountryAndTollSystem, costs, warnings) {
+		function showTceCost(costByCountryAndTollSystem, costs, summary,warnings) {
 			
 			/***********************************************
 
@@ -527,27 +513,16 @@
 				feedbackTxt.innerHTML += "<br/><br/>None.";
 			} else {
 				feedbackTxt.innerHTML += "<br/><br/><span>Total Cost: " + costs.totalCost + " " + costs.currency + "</span>";
-				//feedbackTxt.innerHTML += "<ul><li>Driver Cost: " + costs.details.driverCost + " " + costs.currency + "</li></ul>";
-				//feedbackTxt.innerHTML += "<ul><li>Vehicle Cost: " + costs.details.vehicleCost + " " + costs.currency + "</li></ul>";
-				//feedbackTxt.innerHTML += "<ul><li>Toll Cost: " + costs.details.tollCost + " " + costs.currency + "</li></ul>";
-                console.log({costByCountryAndTollSystem, costs, warnings})
+    
+        feedbackTxt.innerHTML += "<hr><br/><br/><span>Info: " + summary.text +"</span>";
+        
+				console.log({costByCountryAndTollSystem, costs, warnings})
 			}
-
-			/***********************************************
-
-			Publishing route detail cost
-
-			***********************************************/
-
-			//feedbackTxt.innerHTML += "<br/><span style=\"font-weight: bold;border: 1px solid;padding: 2px;\">TOLL COST FOR MAIN ROUTE</span>";
 
 			if (costs.details.tollCost == 0.0) {
 				feedbackTxt.innerHTML += "<br/><br/>None.<br/><br/>";
 			}
 
-			/***********************************************
-			Apply toll to link objects
-			***********************************************/
 			if(costByCountryAndTollSystem != null) {
 				var feedback = "";
 				feedback += "<br/>";
@@ -566,16 +541,6 @@
 				}
 
 				feedbackTxt.innerHTML += feedback;
-			}
-
-			if (costs.details.tollCost != 0.0) {
-				/*feedbackTxt.innerHTML += "<br/><br/><span style=\"font-weight: normal;color:" + rgb2hex(ppType_A_Color[0]) + ";\">Paypoint Type A: Country wide toll - payed here.</span>";
-				feedbackTxt.innerHTML += "<br/><span style=\"font-weight: normal;color:" + rgb2hex(ppType_a_Color[0]) + ";\">Paypoint Type A: Country wide toll - payed somewhere else.</span>";
-				feedbackTxt.innerHTML += "<br/><span style=\"font-weight: normal;color:" + rgb2hex(ppType_S_Color[0]) + ";\">Paypoint Type S: Toll section from one toll booth or between two toll boths.</span>";
-				feedbackTxt.innerHTML += "<br/><span style=\"font-weight: normal;color:" + rgb2hex(ppType_p_Color[0]) + ";\">Paypoint Type p: Toll - payed somewhere else.</span>";
-				feedbackTxt.innerHTML += "<br/><span style=\"font-weight: normal;color:" + rgb2hex(ppType_F_Color[0]) + ";\">Paypoint Type F: Toll section belonging to a toll system.</span>";
-				feedbackTxt.innerHTML += "<br/><span style=\"font-weight: normal;color:" + rgb2hex(ppType_K_Color[0]) + ";\">Paypoint Type K: Toll section defined between junctions.</span>";
-				feedbackTxt.innerHTML += "<br/><span style=\"font-weight: normal;color:" + rgb2hex(ppType_U_Color[0]) + ";\">UFR: Usage fee required link(s).</span>";*/
 			}
 
 			return; // done
@@ -699,15 +664,11 @@
 		}
 	}
 
-	//Returns the name of the provided toll system id
-	function getTollSystemName(tollSystemId, tollSystemsNames) {
 
-		//Case 1: only one toll system id
+	function getTollSystemName(tollSystemId, tollSystemsNames) {
 		if (tollSystemId.indexOf(",") == -1) {
 			return getTollSystemNameWithLanguageCode(tollSystemId, tollSystemsNames, "ENG");
 		}
-
-		//Case 2: 2 toll systems ids separated by a comma
 		var splitTsn = tollSystemId.split(",");
 		return (getTollSystemNameWithLanguageCode(splitTsn[0], tollSystemsNames, "ENG") + " , " + getTollSystemNameWithLanguageCode(splitTsn[1], tollSystemsNames, "ENG"));
 	}
@@ -734,7 +695,7 @@
 	 This method checks the user setted vehicle specification and adapts all vehicle value in the GUI
 	 */
 	function handleVehicleSpecChanged() {
-		setUserdefinedVehicleSpec(false);
+		setUserdefinedVehicleSpec(true);
 		var vehicle = 2;
 		var totalNumTires = 4;
 		var trailerType = 0;
