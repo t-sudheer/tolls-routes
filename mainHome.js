@@ -48,7 +48,7 @@
 			document.getElementById('mapContainer'),
 			maptypes.vector.normal.map,
 			{
-			  zoom,
+			  zoom:12,
 			  center
 			});
 			
@@ -166,7 +166,7 @@
 					bLongClickUseForStartPoint = true;
 			}
 	
-		map.getViewModel().setLookAtData({bounds: markerGroup.getBoundingBox()});
+		map.getViewModel().setLookAtData({bounds: markerGroup.getBoundingBox(),zoom:5},true);
 		}
 
 		/************************************
@@ -225,8 +225,9 @@
 							markerGroup.addObject(destMarker);
 
                             map.getViewModel().setLookAtData({
-                                bounds: markerGroup.getBoundingBox()
-                              });
+								bounds: markerGroup.getBoundingBox(),
+								zoom:6
+                              },true);
                            
 					}
 
@@ -466,9 +467,10 @@
 				}
 			}
 
-            map.addObject(group);
-			map.getViewModel().setLookAtData({bounds: group.getBoundingBox(),zoom:10},true);
-			console.log('map.getViewModel().setLookAtData({bounds: map.getBoundingBox()});')
+			map.addObject(group);
+			map.getViewPort().setPadding(0, 0, 0, $('.ctrl-panel').width());
+			map.getViewModel().setLookAtData({bounds: group.getBoundingBox()},true);
+			console.log(link)
 			 
 			// show TCE costs
 			showTceCost(resp.response.route[0].tollCost.costsByCountryAndTollSystem, resp.response.route[0].cost,resp.response.route[0].summary, resp.warnings);
