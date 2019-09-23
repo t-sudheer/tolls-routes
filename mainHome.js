@@ -542,7 +542,7 @@
 					
 					feedback += "<ul><li>";
 					if(costByCountryAndTollSystem[j].name != null && costByCountryAndTollSystem[j].name.trim().length > 0) {
-						feedback += "Toll System " + costByCountryAndTollSystem[j].name + ": ";
+						feedback += "" + costByCountryAndTollSystem[j].name + ": ";
 					} else if(costByCountryAndTollSystem[j].tollSystemId != null && costByCountryAndTollSystem[j].tollSystemId.trim().length > 0) {
 						feedback += "Toll System ID " + costByCountryAndTollSystem[j].tollSystemId + ": "
 					} else {
