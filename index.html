@@ -40,14 +40,15 @@
 		.card-body:hover {
 			background-color: rgba(252, 255, 89, 0.561);
 		}
-.container-fluid { padding: 0;}
+.container-fluid { padding: 0;overflow: none;}
 		#mapContainer {
 			height: 100vh;
 			left: 0;
 			position: absolute;
 			width: 100vw;
-			top: 5px;
+			/* top: 5px; */
 			background: rgb(88, 88, 88);
+			
 		}
 .col-sm-9{
 	max-width: 100%;
@@ -81,11 +82,12 @@
 			/* box-shadow: 6px 8px #888888; */
 	overflow: auto; 
 	overflow-x: none; 
-	position: relative;
+	position: inherit;
 	max-height:300px; 
 	max-width:374px;
-	top:260px;
-	left:10px;
+	width:374px;
+	top:237px;
+	left:2px;
 	z-index: 10;
 	background-color: #ffffff;
 		}
@@ -95,7 +97,6 @@
 
 <body>
 		
-<div display="flex">
 	<div class="ctrl-panel">
 		<div class="form-horizontal">
 			<div class="form-group row">
@@ -362,10 +363,9 @@
 	
 		
 		
-	</div>
 	<div id="feedbackTxt"></div>
 </div>
-	<div id="mapContainer" class="container-fluid"></div>
+	<div id="mapContainer" class=""></div>
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

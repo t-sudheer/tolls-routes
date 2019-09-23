@@ -52,7 +52,7 @@
 		markerGroup = new H.map.Group(),
 		  map = new H.Map(
 			document.getElementById('mapContainer'),
-			maptypes.vector.normal.map,
+			maptypes.raster.satellite.map,
 			{
 			  zoom:8,
 			  center:{lat:40.730610,lng:-73.935242}
