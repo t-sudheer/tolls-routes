@@ -1,4 +1,10 @@
 
+		 var app_id = "MMRyT9PioGx6DeImyPie",
+		 app_code = "SB7YD1dqPH40vz-lSJE19g",
+		 app_id_cors = "BTp1kLd1IpptcQe2Ir3h",
+		 app_code_cors = "zMDPaKTAFR2g3wF3h4ok7w",
+		 api_key = "43ZNwPKXbl1IXT3H4qSdaSs0xAw_M76NaT_7bmlju98";
+
 		(function setValuesFromUrl() {
 			var indexOf = window.location.href.indexOf('?');
 			if (indexOf < 0) return;
@@ -35,7 +41,7 @@
 
 		// Create a platform object to communicate with the HERE REST APIs
 		var platform = new H.service.Platform({
-			apikey :api_key,
+			apikey :'43ZNwPKXbl1IXT3H4qSdaSs0xAw_M76NaT_7bmlju98',
 			useCIT: true,
     		useHTTPS: secure
 		}),
@@ -48,14 +54,14 @@
 			document.getElementById('mapContainer'),
 			maptypes.vector.normal.map,
 			{
-			  zoom:12,
-			  center
+			  zoom:8,
+			  center:{lat:40.730610,lng:-73.935242}
 			});
 			
 		window.addEventListener('resize', () => map.getViewPort().resize());
       
 
-		map.getViewPort().setPadding(0, 0, 0, $('.ctrl-panel').width());
+		//map.getViewPort().setPadding(0, 0, 0, $('.ctrl-panel').width());
 
 		// add behavior control
 		new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
@@ -83,16 +89,16 @@
 		var bErrorHappened = false;
 		var bLongClickUseForStartPoint = true; // for long click in map we toggle start/destination
 
-		var routeColor = ["rgba(18, 65, 145, 0.8)", "rgba(0, 145, 255, 0.7)", "rgba(127, 201, 255, 0.6)"];
-		var ppType_A_Color = ["rgba(255, 255, 0, 0.8)", "rgba(255, 255, 0, 0.7)", "rgba(255, 255, 0, 0.6)"];
-		var ppType_a_Color = ["rgba(255, 216, 0, 0.8)", "rgba(255, 216, 0, 0.7)", "rgba(255, 216, 0, 0.6)"];
-		var ppType_S_Color = ["rgba(255, 0, 0, 0.8)", "rgba(255, 0, 0, 0.7)", "rgba(255, 0, 0, 0.6)"];
-		var ppType_p_Color = ["rgba(255, 127, 127, 0.8)", "rgba(255, 127, 127, 0.7)", "rgba(255, 127, 127, 0.6)"];
-		var ppType_F_Color = ["rgba(214, 127, 255, 0.8)", "rgba(214, 127, 255, 0.7)", "rgba(214, 127, 255, 0.6)"];
-		var ppType_K_Color = ["rgba(178, 0, 255, 0.8)", "rgba(178, 0, 255, 0.7)", "rgba(178, 0, 255, 0.6)"];
-		var ppType_U_Color = ["rgba(0, 204, 0, 0.8)", "rgba(0, 204, 0, 0.7)", "rgba(0, 204, 0, 0.6)"];
+		var routeColor = ["rgba(18, 65, 145, 0.8)", "rgba(0, 145, 255, 0.7)", "rgba(127, 201, 255, 0.6)"],
+		 ppType_A_Color = ["rgba(255, 255, 0, 0.8)", "rgba(255, 255, 0, 0.7)", "rgba(255, 255, 0, 0.6)"],
+		 ppType_a_Color = ["rgba(255, 216, 0, 0.8)", "rgba(255, 216, 0, 0.7)", "rgba(255, 216, 0, 0.6)"],
+		 ppType_S_Color = ["rgba(255, 0, 0, 0.8)", "rgba(255, 0, 0, 0.7)", "rgba(255, 0, 0, 0.6)"],
+		 ppType_p_Color = ["rgba(255, 127, 127, 0.8)", "rgba(255, 127, 127, 0.7)", "rgba(255, 127, 127, 0.6)"],
+		 ppType_F_Color = ["rgba(214, 127, 255, 0.8)", "rgba(214, 127, 255, 0.7)", "rgba(214, 127, 255, 0.6)"],
+		 ppType_K_Color = ["rgba(178, 0, 255, 0.8)", "rgba(178, 0, 255, 0.7)", "rgba(178, 0, 255, 0.6)"],
+		 ppType_U_Color = ["rgba(0, 204, 0, 0.8)", "rgba(0, 204, 0, 0.7)", "rgba(0, 204, 0, 0.6)"];
 		var tollCostStroke = 5, routeStroke = 5;
-		var strRoutingRequestSend = "Routing request sent. Waiting for response...";
+		var strRoutingRequestSend = "Waiting for response...";
 		var strTceRequestSend = "Route Toll Cost request sent and logged. Waiting for response...";
 		var strTceError = "An Error happened during Route Toll Cost calculation. Please check the vehicle specification<br/>F.e. Trailer number set but no trailer type.";
 		var strTceResponseReceived = "Received TCE response. Processing it now.";
@@ -290,13 +296,13 @@
 
 			var vspec = "";
 			vspec += "&tollVehicleType=" + vehicles.value;
-			vspec += "&trailerType=" + trailerType.value;
-			vspec += "&trailersCount=" + trailerNr.value;
-			vspec += "&vehicleNumberAxles=" + nrOfAxlesVehicle.value;
-			vspec += "&trailerNumberAxles=" + nrOfAxlesTrailer.value;
-			vspec += "&hybrid=" + hybrid.value;
-			vspec += "&emissionType=" + emissionType.value;
-			vspec += "&fuelType=" + fuelType.value;
+			vspec += "&trailerType=" + 0;
+			vspec += "&trailersCount=" + 0;
+			vspec += "&vehicleNumberAxles=" + 2;
+			vspec += "&trailerNumberAxles=" + 0;
+			vspec += "&hybrid=" + 0;
+			vspec += "&emissionType=" + 5;
+			vspec += "&fuelType=" + 'petrol';
 			if (height != null && height.length > 0) vspec += height;
 			vspec += "&trailerHeight=" + trailerHeight.value;
 			vspec += "&vehicleWeight=" + vehWeight.value;
@@ -311,7 +317,7 @@
 			if (width != null && width.length > 0) vspec += width;
 			if (length != null && length.length > 0) vspec += length;
 			if (shippedHazardousGoods != null && shippedHazardousGoods.length > 0) vspec += shippedHazardousGoods;
-			var routerParamsValue = document.getElementById('routerParamsValue').value;
+			var routerParamsValue = '';
 			var finalParamsValue = '';
 			if (routerParamsValue !== '') {
 				var paramsArray = [];
@@ -372,7 +378,8 @@
 				app_code,
 				"&jsoncallback=parseRoutingResponse"].join("");
 
-				feedbackTxt.innerHTML += strRoutingRequestSend;
+				feedbackTxt.innerHTML += '&nbsp;Please wait while we are fetching the data....';
+			  
 				script = document.createElement("script");
 				script.src = urlRoutingReq;
 				document.body.appendChild(script);
@@ -433,20 +440,32 @@
 						routeLinkHashMap[(resp.response.route[r].leg[0].link[m].linkId.lastIndexOf("+", 0) === 0 ? resp.response.route[r].leg[0].link[m].linkId.substring(1) : resp.response.route[r].leg[0].link[m].linkId)] = link;
 
 						// add event listener to link
-						link.addEventListener("pointerdown", function (e) {
-							if (currentOpenBubble)
-								ui.removeBubble(currentOpenBubble);
-							var html = '<div>' +
-								'<p style="font-family:Arial,sans-serif; font-size:12px;">LinkId: ' + e.target.$linkId + '</p>'
-							'</div>';
+						// link.addEventListener("pointerdown", function (e) {
+						// 	if (currentOpenBubble)
+						// 		ui.removeBubble(currentOpenBubble);
+						// 	var html = '<div>' +
+						// 		'<p style="font-family:Arial,sans-serif; font-size:12px;">LinkId: ' + e.target.$linkId + '</p>'
+						// 	'</div>';
 
-							var pos = map.screenToGeo(e.currentPointer.viewportX, e.currentPointer.viewportY);
+						// 	var pos = map.screenToGeo(e.currentPointer.viewportX, e.currentPointer.viewportY);
 
-							currentOpenBubble = new H.ui.InfoBubble(pos, {content: html});
-							ui.addBubble(currentOpenBubble);
-						});
+						// 	currentOpenBubble = new H.ui.InfoBubble(pos, {content: html});
+						// 	ui.addBubble(currentOpenBubble);
+						// });
 
 						group.addObject(link);
+						link.addEventListener('tap',function(e){
+							console.log('hih')
+							var link = new H.map.Polyline(strip,
+								{
+									style: {
+										lineWidth: (routeStroke - (r + 1)), // alternatives get smaller line with
+										strokeColor: 'rgba(240, 255, 0, 1)',
+										lineCap: 'butt'
+									}
+								});
+								map.addObject(link);
+						})
 				}
 			}
 
@@ -466,6 +485,7 @@
 
 			for(var i = 0; i < resp.response.route.length; i++) {
 				highlightRoute(resp.response.route[i].tollCost.routeTollItems, i);
+
 				showTceCost(resp.response.route[i].tollCost.costsByCountryAndTollSystem, resp.response.route[i].cost,resp.response.route[i].summary, resp.warnings);
 				//feedbackTxt.innerHTML += JSON.stringify(resp.response.route[i].summary);
 			}
@@ -475,8 +495,9 @@
 		  }
 			function showTceCost(costByCountryAndTollSystem, costs, summary,warnings) {
 			
+				var html_code = ''
+		
 			
-			feedbackTxt.innerHTML += "<br/><span style=\"font-weight: bold;padding: 2px;\">Total Cost</span><hr>";
 			if(warnings)
 			{
 				for(var j = 0; j < warnings.length; j++)
@@ -494,24 +515,31 @@
 			}
 
 			if (!costs) {
-				feedbackTxt.innerHTML += "<br/><br/>None.";
+				//feedbackTxt.innerHTML += "<br/><br/>None.";
 			} else {
-				feedbackTxt.innerHTML += "<br/><br/><span>Total Cost: " + costs.totalCost + " " + costs.currency + "</span>";
+				html_code += '<div class="card" style="width: 23rem;border: 8px solid rgba(0,0,0,.125);"><div class="card-body">';
+				html_code += "<p>Total Cost: " + costs.totalCost + " " + costs.currency + '. '+summary.text +"</p>";
     
-        feedbackTxt.innerHTML += "<hr><br/><br/><span>Info: " + summary.text +"</span>";
+        
         
 				console.log({costByCountryAndTollSystem, costs, warnings})
 			}
 
 			if (costs.details.tollCost == 0.0) {
-				feedbackTxt.innerHTML += "<br/><br/>None.<br/><br/>";
+				//feedbackTxt.innerHTML += "<br/><br/>None.<br/><br/>";
 			}
 
 			if(costByCountryAndTollSystem != null) {
 				var feedback = "";
-				feedback += "<br/>";
+				feedback += "";
+				var prevCoutry = ''
 				for (var j = 0; j < costByCountryAndTollSystem.length; j++) {
-					feedback += "<br/><span style=\"font-weight: bold;padding: 2px;\">" + costByCountryAndTollSystem[j].country + "</span>"
+					
+					if(prevCoutry != costByCountryAndTollSystem[j].country){
+						feedback += "<p style=\"font-weight: bold;\">" + costByCountryAndTollSystem[j].country + "</p>"
+						prevCoutry = costByCountryAndTollSystem[j].country
+					}
+					
 					feedback += "<ul><li>";
 					if(costByCountryAndTollSystem[j].name != null && costByCountryAndTollSystem[j].name.trim().length > 0) {
 						feedback += "Toll System " + costByCountryAndTollSystem[j].name + ": ";
@@ -522,13 +550,15 @@
 					}
 					feedback += costByCountryAndTollSystem[j].amountInTargetCurrency + " " + costs.currency;
 					feedback += "</li></ul>";
+					
 				}
-
-				feedbackTxt.innerHTML += feedback;
+				
+				html_code += feedback;
+				
 			}
-
+			feedbackTxt.innerHTML += html_code+'</div>';
 			return; // done
-
+			
 		}
 
 		/**
@@ -679,7 +709,7 @@
 	 This method checks the user setted vehicle specification and adapts all vehicle value in the GUI
 	 */
 	function handleVehicleSpecChanged() {
-		setUserdefinedVehicleSpec(true);
+		setUserdefinedVehicleSpec(false);
 		var vehicle = 2;
 		var totalNumTires = 4;
 		var trailerType = 0;
