@@ -34,6 +34,7 @@
 
 		
 var routeIDs = ['A','B','C','D','E','F','G'];
+var routeColors = [];
 		var mapContainer = document.getElementById('mapContainer');
 
 		// check if the site was loaded via secure connection
@@ -439,7 +440,7 @@ let icon =new H.map.Icon(svgMarkup);
 					for (i = 0; i < l; i += 2) {
 						strip.pushLatLngAlt(shape[i], shape[i + 1], 0);
 					}
-
+					routeColors[r] = routeColor[r];
 					var link = new H.map.Polyline(strip,
 						{
 							style: {
@@ -500,9 +501,10 @@ let icon =new H.map.Icon(svgMarkup);
 
 
 			for(var i = 0; i < resp.response.route.length; i++) {
+				
 				highlightRoute(resp.response.route[i].tollCost.routeTollItems, i);
 
-				showTceCost(resp.response.route[i].tollCost.costsByCountryAndTollSystem, resp.response.route[i].cost,resp.response.route[i].summary, resp.warnings,routeIDs[i]);
+				showTceCost(resp.response.route[i].tollCost.costsByCountryAndTollSystem, resp.response.route[i].cost,resp.response.route[i].summary, resp.warnings,routeIDs[i],routeColors[i]);
 				//feedbackTxt.innerHTML += JSON.stringify(resp.response.route[i].summary);
 			}
 			$('#mydiv').fadeOut('slow')
@@ -510,7 +512,7 @@ let icon =new H.map.Icon(svgMarkup);
 		function sleep(ms) {
 			return new Promise(resolve => setTimeout(resolve, ms));
 		  }
-			function showTceCost(costByCountryAndTollSystem, costs, summary,warnings,routeName) {
+			function showTceCost(costByCountryAndTollSystem, costs, summary,warnings,routeName,routeColors) {
 			
 				var html_code = ''
 		
@@ -534,7 +536,7 @@ let icon =new H.map.Icon(svgMarkup);
 			if (!costs) {
 				//feedbackTxt.innerHTML += "<br/><br/>None.";
 			} else {
-				html_code += '<div class="card" style="width: 23rem;border: 8px solid rgba(0,0,0,.125);"><div class="card-body">';
+				html_code += '<div class="card" style="width: 23rem;border: 8px solid rgba(0,0,0,.125);background-color:'+routeColors+'"><div class="card-body">';
 				html_code += "<h6>Route: "+routeName+"</h6>";
 				html_code += "<p>Total Cost: " + costs.totalCost + " " + costs.currency + '. '+summary.text +"</p>";
     
