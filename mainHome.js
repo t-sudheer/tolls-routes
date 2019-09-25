@@ -1,40 +1,13 @@
-
+// codes and keys. Got from developer.here.com
 		 var app_id = "MMRyT9PioGx6DeImyPie",
 		 app_code = "SB7YD1dqPH40vz-lSJE19g",
 		 app_id_cors = "BTp1kLd1IpptcQe2Ir3h",
 		 app_code_cors = "zMDPaKTAFR2g3wF3h4ok7w",
 		 api_key = "43ZNwPKXbl1IXT3H4qSdaSs0xAw_M76NaT_7bmlju98";
 
-		(function setValuesFromUrl() {
-			var indexOf = window.location.href.indexOf('?');
-			if (indexOf < 0) return;
-			var vars = window.location.href.slice(indexOf + 1).split('&');
-
-			for (var i = 0; i < vars.length; i++) {
-				nameVal = vars[i].split('=');
-				if (!nameVal[0]) continue;
-				document.getElementById(nameVal[0]).value = decodeURIComponent(nameVal[1]);
-			}
-
-		})();
-
-		function cloneSettingsInNewWindow() {
-			var url = location.protocol + '//' + location.host + location.pathname + '?';
-			var inputs = document.getElementsByTagName('input');
-			for (var i = 0; i < inputs.length; i++) {
-				url += inputs[i].id + '=' + encodeURIComponent(inputs[i].value) + '&';
-			}
-			var inputs = document.getElementsByTagName('select');
-			for (var i = 0; i < inputs.length; i++) {
-				url += inputs[i].id + '=' + inputs[i].value + '&';
-			}
-
-			window.open(url);
-		}
-
-		
-var routeIDs = ['A','B','C','D','E','F','G'];
-var routeColors = [];
+// Require variables
+		var routeIDs = ['A','B','C','D','E','F','G'];
+		var routeColors = [];
 		var mapContainer = document.getElementById('mapContainer');
 
 		// check if the site was loaded via secure connection
@@ -69,9 +42,11 @@ var routeColors = [];
 
 		// add UI
 		var ui = H.ui.UI.createDefault(map, maptypes);
+// End rendering the initial map
 
 		// add long click in map event listener
 		map.addEventListener('longpress', handleLongClickInMap);
+// Required variables for the route api 
 
 		var routeButton = document.getElementById("routeButton2");
 		var start = document.getElementById("start");
@@ -121,6 +96,7 @@ var routeColors = [];
 		}
 
 		var startRouteCalculation = function () {
+			$('#mydiv').fadeIn('slow');
 			clearLastRouteCalculation();
 			geocode(start.value, true);
 		}
@@ -232,6 +208,8 @@ var routeColors = [];
 						calculateRoute(pointA, pointB);
 				},
 				function (error) {
+					alert("Source and Destinations inputs are required!")
+					$('#mydiv').fadeOut('slow');
 					alert(error);
 				}
 			);
@@ -396,6 +374,7 @@ var routeColors = [];
 				}
 				else {
 					alert(JSON.stringify(resp));
+					$('#mydiv').fadeIn('slow');
 					feedbackTxt.innerHTML = JSON.stringify(resp);
 				}
 				return;
@@ -417,18 +396,7 @@ var routeColors = [];
 					
 			// create link objects
 			for (var r = 0; r < resp.response.route.length; r++) {
-				var svgMarkup = '<svg width="24" height="24" ' +
-  'xmlns="http://www.w3.org/2000/svg">' +
-  '<rect stroke="white" fill="#1b468d" x="1" y="1" width="22" ' +
-  'height="22" /><text x="12" y="18" font-size="12pt" ' +
-  'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
-  'fill="white">'+routeIDs[r]+'</text></svg>';
-
-let icon =new H.map.Icon(svgMarkup);
-				console.log({'lat':resp.response.route[r].waypoint[0].mappedPosition.latitude, 'lng':resp.response.route[r].waypoint[0].mappedPosition.longitude})
-			map.addObject(new H.map.Marker({'lat':resp.response.route[r].waypoint[0].mappedPosition.latitude, 'lng':resp.response.route[r].waypoint[0].mappedPosition.longitude}));
-			
-				for (var m = 0; m < resp.response.route[r].leg[0].link.length; m++) {
+					for (var m = 0; m < resp.response.route[r].leg[0].link.length; m++) {
 					var strip = new H.geo.LineString(),
 					shape = resp.response.route[r].leg[0].link[m].shape,
 					i,
@@ -542,7 +510,7 @@ let icon =new H.map.Icon(svgMarkup);
     
         
         
-				console.log({costByCountryAndTollSystem, costs, warnings})
+				
 			}
 
 			if (costs.details.tollCost == 0.0) {
@@ -617,7 +585,8 @@ let icon =new H.map.Icon(svgMarkup);
 					//toll structures
 					if(routeTollItems[i].tollStructures != null) {
 						for (var j = 0; j < routeTollItems[i].tollStructures.length; j++) {
-							createTollMarker(routeTollItems[i].tollStructures[j]);
+							console.log({'routeTollItems':routeTollItems[i]})
+							createTollMarker(routeTollItems[i].tollStructures[j],routeTollItems[i]);
 						}
 					}
 				}
@@ -1059,11 +1028,17 @@ let icon =new H.map.Icon(svgMarkup);
 		return strRet;
 	}
 
-	function createTollMarker(oneTollStructure)
-	{
+	function createTollMarker(oneTollStructure,tollSystemObj)
+	{console.log({oneTollStructure})
 		var pos= new H.geo.Point(oneTollStructure.latitude, oneTollStructure.longitude);
 		var tollMarker = new H.map.Marker(pos, { icon: tollIcon });
-		tollMarker.addEventListener("tap",function() {displayTollStructureName(pos,oneTollStructure.name);});
+
+		if(typeof tollSystemObj.tollSystem !== 'undefined'){
+			tollMarker.addEventListener("tap",function() {displayTollStructureName(pos,oneTollStructure.name+' '+tollSystemObj.tollSystem[0].name);});	
+		}else{
+			tollMarker.addEventListener("tap",function() {displayTollStructureName(pos,oneTollStructure.name);});
+		}
+		//tollMarker.addEventListener("tap",function() {displayTollStructureName(pos,oneTollStructure.name+' '+tollSystemObj.tollSystem[0].name);});
 		group.addObject(tollMarker);
 	}
 
