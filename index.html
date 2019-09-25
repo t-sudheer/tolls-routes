@@ -28,16 +28,17 @@
 		src="https://tcs.ext.here.com/assets/application-c292081b4b1620b3a8c834ab559705c7d69a2948c7fcf5d380bdd66b44c8e139.js"
 		data-turbolinks-track="true"></script>
 	<style>
-    ::-webkit-scrollbar {
-        -webkit-appearance: none;
-        width: 7px;
-    }
-    ::-webkit-scrollbar-thumb {
-        border-radius: 4px;
-        background-color: rgba(0,0,0,.5);
-        -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
-    }
-		.card-body:hover {
+
+#infoBox {
+            top:10px;
+            z-index: 15;
+            right: 10px;
+            position: absolute;
+        }
+		#infoBox .card{
+			background-color:#faffaf;
+		}
+    	.card-body:hover {
 			background-color: rgba(252, 255, 89, 0.561);
 		}
 .container-fluid { padding: 0;overflow: none;}
@@ -63,7 +64,7 @@
 			border-bottom: solid #ffffff 1px;
 			/*border-radius: 10px 10px 0px 0px;*/
 			left: 30px;
-			max-width: 500px;
+			width: 374px;
 			max-height: calc(100% - 100px);
 			display: block;
 			font-size: 12px;
@@ -78,20 +79,39 @@
 			clear: both;
 		}
 		#feedbackTxt{
-			/* border-radius: 0px 0px 10px 10px;	 */
-			/* box-shadow: 6px 8px #888888; */
-	overflow: auto; 
-	overflow-x: none; 
-	position: inherit;
-	max-height:300px; 
-	max-width:374px;
-	width:374px;
-	top:237px;
-	left:2px;
-	z-index: 10;
-	background-color: #ffffff;
+
+			overflow-y: auto;  
+			min-height: 10px;
+			max-height: 350px;
+			background-color: #ffffff;
+			width: 374px;
+			display: block;
+			font-size: 12px;		
+			position: absolute;
+			text-align: justify;
+			top:237px;
+			left:0px;
+			z-index: 10;
 		}
-	
+		#mydiv {  
+    display: none;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url(Preloader_11.gif) center no-repeat #0c0c0c52;
+ }
+
+.ajax-loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -32px; /* -1 * image width / 2 */
+    margin-top: -32px;  /* -1 * image height / 2 */
+    display: block;     
+}
 	</style>
 </head>
 
@@ -365,12 +385,30 @@
 		
 	<div id="feedbackTxt"></div>
 </div>
+<div id="infoBox">
+		<div class="card" style="width: 18rem;">
+				<div class="card-body">
+				  <h5 class="card-title">Routes & Toll Gates</h5>
+				  <!--<h6 class="card-subtitle mb-2 text-muted">This application will help us to calculate the toll gate cost for the available routes</h6>-->
+				  <p class="card-text">This application will help us to calculate the toll gate cost for the available routes.</p>
+
+				  <h6 class="card-subtitle mb-2 text-muted">Specifications</h6>
+				  <ul>
+					  <li>JavaScript SDK : v3.1</li>
+				  </ul>
+				  <p class="card-text">For the more information, Please go through the below tutorial.</p>
+				  <a href="#" class="card-link">developer.here.com/tutorials</a>
+				</div>
+			  </div>
+</div>
+<div id="mydiv">
+		
+	
+	</div>
 	<div id="mapContainer" class=""></div>
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
 		crossorigin="anonymous"></script>

@@ -36,6 +36,14 @@
         data-turbolinks-track="true"></script>
 
     <style>
+        #infoBox {
+            background-color: bisque;
+            widows: 300;
+            height: 400;
+            z-index: 15px;
+            right: 10px;
+            position: absolute;
+        }
         #mapContainer {
             height: 100vh;
             left: 0;
@@ -390,7 +398,7 @@
         <div id="releaseInfoTxt" style="left:0; top:0; z-index: 0; display: none" value="Used Service Releases:/n">
         </div>
     </div>
-
+<div id="infoBox"> </div>
     <div id="mapContainer"></div>
     <script src="main.js"></script>
 

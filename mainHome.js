@@ -33,7 +33,7 @@
 		}
 
 		
-
+var routeIDs = ['A','B','C','D','E','F','G'];
 		var mapContainer = document.getElementById('mapContainer');
 
 		// check if the site was loaded via secure connection
@@ -238,7 +238,7 @@
 
 
 		var calculateRoute = function (start, destination) {
-
+			feedbackTxt.innerHTML = ''
 			// generate routing request
 			var transportMode = "car";
 			if (vehicles.value == "3" || vehicles.value == "9") {
@@ -378,7 +378,7 @@
 				app_code,
 				"&jsoncallback=parseRoutingResponse"].join("");
 
-				feedbackTxt.innerHTML += '&nbsp;Please wait while we are fetching the data....';
+				$('#mydiv').fadeIn('slow');
 			  
 				script = document.createElement("script");
 				script.src = urlRoutingReq;
@@ -412,15 +412,30 @@
 			}
 
 			routeLinkHashMap = new Object();
-
+			
+					
 			// create link objects
 			for (var r = 0; r < resp.response.route.length; r++) {
+				var svgMarkup = '<svg width="24" height="24" ' +
+  'xmlns="http://www.w3.org/2000/svg">' +
+  '<rect stroke="white" fill="#1b468d" x="1" y="1" width="22" ' +
+  'height="22" /><text x="12" y="18" font-size="12pt" ' +
+  'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+  'fill="white">'+routeIDs[r]+'</text></svg>';
+
+let icon =new H.map.Icon(svgMarkup);
+				console.log({'lat':resp.response.route[r].waypoint[0].mappedPosition.latitude, 'lng':resp.response.route[r].waypoint[0].mappedPosition.longitude})
+			map.addObject(new H.map.Marker({'lat':resp.response.route[r].waypoint[0].mappedPosition.latitude, 'lng':resp.response.route[r].waypoint[0].mappedPosition.longitude}));
+			
 				for (var m = 0; m < resp.response.route[r].leg[0].link.length; m++) {
 					var strip = new H.geo.LineString(),
 					shape = resp.response.route[r].leg[0].link[m].shape,
 					i,
 					l = shape.length;
+					
 
+
+					
 					for (i = 0; i < l; i += 2) {
 						strip.pushLatLngAlt(shape[i], shape[i + 1], 0);
 					}
@@ -452,10 +467,10 @@
 						// 	currentOpenBubble = new H.ui.InfoBubble(pos, {content: html});
 						// 	ui.addBubble(currentOpenBubble);
 						// });
-
+						
 						group.addObject(link);
 						link.addEventListener('tap',function(e){
-							console.log('hih')
+							
 							var link = new H.map.Polyline(strip,
 								{
 									style: {
@@ -479,6 +494,7 @@
 			})();
 			map.getViewModel().setLookAtData({bounds: group.getBoundingBox()},true);
 			
+			
 			 
 
 
@@ -486,14 +502,15 @@
 			for(var i = 0; i < resp.response.route.length; i++) {
 				highlightRoute(resp.response.route[i].tollCost.routeTollItems, i);
 
-				showTceCost(resp.response.route[i].tollCost.costsByCountryAndTollSystem, resp.response.route[i].cost,resp.response.route[i].summary, resp.warnings);
+				showTceCost(resp.response.route[i].tollCost.costsByCountryAndTollSystem, resp.response.route[i].cost,resp.response.route[i].summary, resp.warnings,routeIDs[i]);
 				//feedbackTxt.innerHTML += JSON.stringify(resp.response.route[i].summary);
 			}
+			$('#mydiv').fadeOut('slow')
 		}
 		function sleep(ms) {
 			return new Promise(resolve => setTimeout(resolve, ms));
 		  }
-			function showTceCost(costByCountryAndTollSystem, costs, summary,warnings) {
+			function showTceCost(costByCountryAndTollSystem, costs, summary,warnings,routeName) {
 			
 				var html_code = ''
 		
@@ -518,6 +535,7 @@
 				//feedbackTxt.innerHTML += "<br/><br/>None.";
 			} else {
 				html_code += '<div class="card" style="width: 23rem;border: 8px solid rgba(0,0,0,.125);"><div class="card-body">';
+				html_code += "<h6>Route: "+routeName+"</h6>";
 				html_code += "<p>Total Cost: " + costs.totalCost + " " + costs.currency + '. '+summary.text +"</p>";
     
         
