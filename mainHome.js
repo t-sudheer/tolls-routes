@@ -506,7 +506,7 @@
 			} else {
 				html_code += '<div class="card" style="width: 23rem;border: 8px solid rgba(0,0,0,.125);background-color:'+routeColors+'"><div class="card-body">';
 				html_code += "<h6>Route: "+routeName+"</h6>";
-				html_code += "<p>Total Cost: " + costs.totalCost + " " + costs.currency + '. '+summary.text +"</p>";
+				html_code += "<p>Total Toll Cost: " + costs.totalCost + " " + costs.currency + '. '+summary.text +"</p>";
     
         
         
@@ -1034,7 +1034,7 @@
 		var tollMarker = new H.map.Marker(pos, { icon: tollIcon });
 
 		if(typeof tollSystemObj.tollSystem !== 'undefined'){
-			tollMarker.addEventListener("tap",function() {displayTollStructureName(pos,oneTollStructure.name+' '+tollSystemObj.tollSystem[0].name);});	
+			tollMarker.addEventListener("tap",function() {displayTollStructureName(pos,oneTollStructure.name+"<p style='color:green'>TollId:"+tollSystemObj.tollSystem[0].name.toLowerCase()+"</p>");});	
 		}else{
 			tollMarker.addEventListener("tap",function() {displayTollStructureName(pos,oneTollStructure.name);});
 		}
