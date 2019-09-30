@@ -64,8 +64,10 @@
 		var currentOpenBubble;
 		var bErrorHappened = false;
 		var bLongClickUseForStartPoint = true; // for long click in map we toggle start/destination
-
-		var routeColor = ["rgba(18, 65, 145, 0.8)", "rgba(0, 145, 255, 0.7)", "rgba(127, 201, 255, 0.6)"],
+		
+		// backup var routeColor = ["rgba(18, 65, 145, 0.8)", "rgba(0, 145, 255, 0.7)", "rgba(127, 201, 255, 0.6)"],
+		//var routeColor = ["rgba(18, 20, 145, 0.8)", "rgba(218, 60, 12, 0.85)", "rgba(17, 115, 5, 0.79)"],
+		var routeColor =["rgb(2, 113, 176)","rgb(227, 100, 91)","rgb(73, 78, 218)"],
 		 ppType_A_Color = ["rgba(255, 255, 0, 0.8)", "rgba(255, 255, 0, 0.7)", "rgba(255, 255, 0, 0.6)"],
 		 ppType_a_Color = ["rgba(255, 216, 0, 0.8)", "rgba(255, 216, 0, 0.7)", "rgba(255, 216, 0, 0.6)"],
 		 ppType_S_Color = ["rgba(255, 0, 0, 0.8)", "rgba(255, 0, 0, 0.7)", "rgba(255, 0, 0, 0.6)"],

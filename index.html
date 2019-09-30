@@ -39,13 +39,7 @@
             right: 10px;
             position: absolute;
         }
-		#infoBox .card{
-			background-color:#faffaf;
-		}
-    	.card-body:hover {
-			/* background-color: rgba(252, 255, 89, 0.561); */
-			background-color:#173b67;
-		}
+		
 .container-fluid { padding: 0;overflow: none;}
 		#mapContainer {
 			height: 100vh;
@@ -395,12 +389,13 @@
 	<div id="feedbackTxt"></div>
 </div>
 <div id="infoBox">
-		<div class="card" style="width: 18rem;">
+		<div class="card card text-white bg-dark mb-3" style="width: 18rem;">
 				<div class="card-body">
 				  <h5 class="card-title">Routes & Toll Gates</h5>
 				  <!--<h6 class="card-subtitle mb-2 text-muted">This application will help us to calculate the toll gate cost for the available routes</h6>-->
 				  <p class="card-text">This application will help us to calculate the toll gate cost for the available routes.</p>
-
+<p class="card-text">Fill in the source, destination and finally click on the submit button to view the details.</p>
+<p class="card-text">Left-hand side below the form, you will be able to all the route options with matching colors and a list of toll gates in each route along with the cost</p>
 				  <h6 class="card-subtitle mb-2 text-muted">Specifications</h6>
 				  <ul>
 					  <li>JavaScript SDK : v3.1</li>
