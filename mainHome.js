@@ -67,7 +67,7 @@
 		
 		// backup var routeColor = ["rgba(18, 65, 145, 0.8)", "rgba(0, 145, 255, 0.7)", "rgba(127, 201, 255, 0.6)"],
 		//var routeColor = ["rgba(18, 20, 145, 0.8)", "rgba(218, 60, 12, 0.85)", "rgba(17, 115, 5, 0.79)"],
-		var routeColor =["rgb(2, 113, 176)","rgb(227, 100, 91)","rgb(73, 78, 218)"],
+		var routeColor =["rgba(0, 170, 255,1)","rgba(0, 189, 2,1)","rgb(73, 78, 218)"],
 		 ppType_A_Color = ["rgba(255, 255, 0, 0.8)", "rgba(255, 255, 0, 0.7)", "rgba(255, 255, 0, 0.6)"],
 		 ppType_a_Color = ["rgba(255, 216, 0, 0.8)", "rgba(255, 216, 0, 0.7)", "rgba(255, 216, 0, 0.6)"],
 		 ppType_S_Color = ["rgba(255, 0, 0, 0.8)", "rgba(255, 0, 0, 0.7)", "rgba(255, 0, 0, 0.6)"],
@@ -506,10 +506,10 @@
 			if (!costs) {
 				//feedbackTxt.innerHTML += "<br/><br/>None.";
 			} else {
-				html_code += '<div class="card" style="width: 23rem;border: 8px solid rgba(0,0,0,.125);background-color:'+routeColors+'"><div class="card-body">';
-				html_code += "<h6>Route: "+routeName+"</h6>";
+				html_code += '<div class="card" style="width: 23rem;border: 8px solid rgba(0,0,0,.125);"><div class="card-body">';
+				html_code += '<div style="height: 28px; padding: 5px; border-radius: 10px; margin-bottom: 5px; text-align: center; color: aliceblue; width: 300px;background-color:'+routeColors+'"><h6>Route: '+routeName+'</h6></div>';
 				html_code += "<p>Total Toll Cost: " + costs.totalCost + " " + costs.currency + '. '+summary.text +"</p>";
-    
+				
         
         
 				
@@ -520,12 +520,20 @@
 			}
 
 			if(costByCountryAndTollSystem != null) {
+				
 				var feedback = "";
 				feedback += "";
+				
 				var prevCoutry = ''
+
+					if(costByCountryAndTollSystem.length > 0){
+						feedback += "<h8>Toll Cost breakdown:</h8>";
+				}
+
 				for (var j = 0; j < costByCountryAndTollSystem.length; j++) {
 					
 					if(prevCoutry != costByCountryAndTollSystem[j].country){
+						
 						feedback += "<p style=\"font-weight: bold;\">" + costByCountryAndTollSystem[j].country + "</p>"
 						prevCoutry = costByCountryAndTollSystem[j].country
 					}
