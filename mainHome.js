@@ -50,7 +50,7 @@ var start = document.getElementById("start");
 var dest = document.getElementById("dest");
 var mapReleaseTxt = document.getElementById("mapReleaseTxt");
 
-var pointA,pointB, startMarker = null, destMarker = null, routeLinkHashMap = new Object(), routerMapRelease, release,
+var pointA, pointB, startMarker = null, destMarker = null, routeLinkHashMap = new Object(), routerMapRelease, release,
 	currentBubble, currentOpenBubble, bErrorHappened = false, bLongClickUseForStartPoint = true;
 
 var routeColor = ["rgba(0, 170, 255,1)", "rgba(0, 189, 2,1)", "rgb(73, 78, 218)"],
@@ -213,8 +213,8 @@ var calculateRoute = function (start, destination) {
 		transportMode = "delivery"
 	}
 
-	var hasTrailer = null, shippedHazardousGoods = null, limitedWeight = null, trailerWeight = null, 
-	    height = null, width = null, length = null, heightAbove1stAxle = null;
+	var hasTrailer = null, shippedHazardousGoods = null, limitedWeight = null, trailerWeight = null,
+		height = null, width = null, length = null, heightAbove1stAxle = null;
 
 	if (parseInt(trailerType.value) > 0) {
 		hasTrailer = "&trailersCount=1";
@@ -613,27 +613,27 @@ function getTollSystemNameWithLanguageCode(tollSystemId, tollSystemsNames, lngCo
 function handleVehicleSpecChanged() {
 	setUserdefinedVehicleSpec(false);
 	var vehicle = 2,
-	 totalNumTires = 4,
-	 trailerType = 0,
-	 trailerNum = 0,
-	 vehicleNumAxles = 2,
-	 trailerNumAxles = 0,
-	 hybrid = 0,
-	 emmisionType = 5,
-	 vehicleHeight = 167,
-	 vehicleWeight = 1739,
-	 trailerHeight = 0,
-	 totalWeight = 1739,
-	 totalWidth = 180,
-	 totalLength = 441,
-	 disabledEquipped = 0,
-	 minPollution = 0,
-	 hov = 0,
-	 numPassengers = 2,
-	 commercial = 0,
-	 hazardousType = 0,
-	 heightAbove1stAxle = 100,
-	 fuelType = 'petrol';
+		totalNumTires = 4,
+		trailerType = 0,
+		trailerNum = 0,
+		vehicleNumAxles = 2,
+		trailerNumAxles = 0,
+		hybrid = 0,
+		emmisionType = 5,
+		vehicleHeight = 167,
+		vehicleWeight = 1739,
+		trailerHeight = 0,
+		totalWeight = 1739,
+		totalWidth = 180,
+		totalLength = 441,
+		disabledEquipped = 0,
+		minPollution = 0,
+		hov = 0,
+		numPassengers = 2,
+		commercial = 0,
+		hazardousType = 0,
+		heightAbove1stAxle = 100,
+		fuelType = 'petrol';
 
 	var vehSpecSelection = document.getElementById("predefinedVehSpec");
 	if (vehSpecSelection.value == 0) // Car
