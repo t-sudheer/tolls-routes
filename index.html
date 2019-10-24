@@ -18,108 +18,13 @@
 	<script type="text/javascript" charset="UTF-8" src="https://js.api.here.com/v3/3.1/mapsjs-clustering.js"></script>
 	<script type="text/javascript" charset="UTF-8" src="https://js.api.here.com/v3/3.1/mapsjs-data.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
-
-
-	<link rel="shortcut icon" type="image/x-icon"
-		href="https://tcs.ext.here.com/assets/favicon-b11b589c436fb4354ff7ae08b125a27ad29e211ead5de1ab480114e3b8951a16.ico" />
-
-
-	<script
-		src="https://tcs.ext.here.com/assets/application-c292081b4b1620b3a8c834ab559705c7d69a2948c7fcf5d380bdd66b44c8e139.js"
-		data-turbolinks-track="true"></script>
-	<style>
-.H_ib_content{
-	min-width: 15em;
-    margin: 11px 4px 4px 5px;
-
-}
-#infoBox {
-            top:10px;
-            z-index: 15;
-            right: 10px;
-            position: absolute;
-        }
-		
-.container-fluid { padding: 0;overflow: none;}
-		#mapContainer {
-			height: 100vh;
-			left: 0;
-			position: absolute;
-			width: 100vw;
-			/* top: 5px; */
-			background: rgb(88, 88, 88);
-			
-		}
-.col-sm-9{
-	max-width: 100%;
-}
-.form-group {
-    margin-bottom: 0.5rem;
-}
-		.ctrl-panel {
-			/* box-shadow: 6px 8px #888888; */
-			background-color: #ffffff;
-			border-right: solid #ffffff 1px;
-			border-bottom: solid #ffffff 1px;
-			/*border-radius: 10px 10px 0px 0px;*/
-			left: 30px;
-			width: 374px;
-			max-height: calc(100% - 100px);
-			display: block;
-			font-size: 12px;
-			left: 10px;
-			padding: 10px;
-			position: absolute;
-			text-align: justify;
-			top: 10px;
-			z-index: 10;
-			-webkit-transition: left 0.5s, -webkit-transform 2s;
-			transition: left 0.5s, transform 2s;
-			clear: both;
-		}
-		#feedbackTxt{
-
-			overflow-y: auto;  
-			min-height: 10px;
-			max-height: 350px;
-			background-color: #ffffff;
-			width: 374px;
-			display: block;
-			font-size: 12px;		
-			position: absolute;
-			text-align: justify;
-			top:237px;
-			left:0px;
-			z-index: 10;
-		}
-		#mydiv {  
-    display: none;
-	position: fixed;
-	left: 0px;
-	top: 0px;
-	width: 100%;
-	height: 100%;
-	z-index: 9999;
-	background: url(loading.gif) center no-repeat #0c0c0c52;
- }
-
-.ajax-loader {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -32px; /* -1 * image width / 2 */
-    margin-top: -32px;  /* -1 * image height / 2 */
-    display: block;     
-}
-
-#feedbackTxt .card-body {
-	color: black;
-}
-	</style>
+  <!-- Custom Style sheet to try-->
+  <link rel="stylesheet" type="text/css" href="main.css" />
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+  <script src="include.js"></script>
 </head>
 
-<body>
-		
+<body>	
 	<div class="ctrl-panel">
 		<div class="form-horizontal">
 			<div class="form-group row">
@@ -147,20 +52,10 @@
 							<select id="vehicles" class="form-control" 
 						onkeydown="if (event.keyCode == 13)startRouteCalculation();" required onchange="
 					(true)">
-						<!--option value="1">Motorcycle</option-->
 						<option value="2" selected="true">Car</option>
 						<option value="3">Truck</option>
 						<option value="9">Delivery Truck</option>
-						<!--option value="4">Motor Home</option>
-					<option value="5">Minibus</option>
-					<option value="6">Bus</option>
-					<option value="7">Motorcycle Sidecar</option>
-					<option value="8">Tricycle</option>
-					<option value="10">Snowmobile</option>
-					<option value="11">Pick-Up</option>
-					<option value="12">Tractor</option
-					<option value="13">Taxi</option>
-					<option value="14">HCM/EME</option>-->
+					
 					</select>
 					</div>
 					<div class="col-smsdsds-6">
@@ -388,7 +283,7 @@
 		
 	<div id="feedbackTxt"></div>
 </div>
-<div id="infoBox">
+<div id="infoBox" style="display: block;">
 		<div class="card card text-white bg-dark mb-3" style="width: 18rem;">
 				<div class="card-body">
 				  <h5 class="card-title">Routes & Toll Gates</h5>
